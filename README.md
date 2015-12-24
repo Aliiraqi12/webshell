@@ -12,3 +12,7 @@ This PHP Shell is a useful tool for system or web administrator to do remote man
 
 #Donate ~(￣▽￣)~
 Bitcoin-адрес: 1CJehqxoaz8bnGmqNGf1RZ7dmtKWGNt5KM
+Яндекс.Деньги: 410012298324261
+WebMoney WMR: R180357107644
+WebMoney WMZ: Z183801665529
+WebMoney WME: E150418742890
