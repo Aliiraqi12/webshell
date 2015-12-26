@@ -3,9 +3,14 @@
 
 На данный момент считаеться самый лучший Web Shell из всех
 
-Company: [Github](https://github.com/HARDLINUX/webshell)
+GitHub: https://github.com/HARDLINUX/webshell
+
+ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ: Это только в целях тестирования и могут быть использованы только там, где строго было дано согласие. Не используйте это для незаконных целей.
 
 DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes, period.
+
+### Bugs and enhancements
+For bug reports or enhancements, please open an issue here: https://github.com/HARDLINUX/webshell/issues
 
 Это PHP Shell является полезным инструментом для системы или веб-администратором, чтобы сделать удаленное управление без использования CPanel, подключении с помощью SSH, FTP и т.д. Все действия происходят в веб-браузере
 
