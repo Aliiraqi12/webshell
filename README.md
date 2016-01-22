@@ -1,5 +1,5 @@
 #PHP webshell / File manager
-Новый Web Shell WSO на php 2015 года
+Новый Web Shell WSO на php 2016 года
 
 На данный момент считаеться самый лучший Web Shell из всех
 
