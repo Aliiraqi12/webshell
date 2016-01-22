@@ -5,6 +5,9 @@
 
 GitHub: https://github.com/HARDLINUX/webshell
 
+###Кодировка
+Если у вас не работает кириллица, измените кодировку файла UTF-8 без BOM на UTF-8
+
 ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ: Это только в целях тестирования и могут быть использованы только там, где строго было дано согласие. Не используйте это для незаконных целей.
 
 DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes, period.
