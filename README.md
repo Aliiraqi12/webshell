@@ -24,6 +24,8 @@ This PHP Shell is a useful tool for system or web administrator to do remote man
 ![](http://cs621518.vk.me/v621518400/d6ad/e3CgJxw9ThA.jpg)
 
 #Donate ~(￣▽￣)~
+Dogecoin DOGE address: DH5WCDTtBs24pXgRBjkR4z3SwDKnCtXsfB
+
 Bitcoin-адрес: 1CJehqxoaz8bnGmqNGf1RZ7dmtKWGNt5KM
 
 Яндекс.Деньги: 410012298324261
