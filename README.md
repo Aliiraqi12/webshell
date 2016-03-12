@@ -28,6 +28,8 @@ Dogecoin DOGE address: DH5WCDTtBs24pXgRBjkR4z3SwDKnCtXsfB
 
 Bitcoin-адрес: 1CJehqxoaz8bnGmqNGf1RZ7dmtKWGNt5KM
 
+ETHEREUM: 0xf12fed68dd51687be1a3410d9ec17c3d2e9227c9
+
 Яндекс.Деньги: 410012298324261
 
 WebMoney WMR: R180357107644
