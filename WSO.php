@@ -169,7 +169,7 @@ function hardHeader() {
 			} else alert('Request error!');
 	}
 </script>
-<head><body><div style='position:absolute;background-color:#1e252e;width:100%;top:0;left:0;'>
+<head><body><div style='position:absolute;background-color:rgba(46, 110, 156, 0.1);width:100%;top:0;left:0;'>
 <form method=post name=mf style='display:none;'>
 <input type=hidden name=a>
 <input type=hidden name=c>
