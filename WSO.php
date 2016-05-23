@@ -95,7 +95,6 @@ function hardHeader() {
 	.ml1		{border:1px solid #1e252e;padding:5px;margin:0;overflow:auto;}
 	.bigarea	{min-width:100%;max-width:100%;height:400px;}
 	input, textarea, select	{margin:0;color:#fff;background-color:#1e252e;border:1px solid #060a10; font:9pt Courier New;outline:none;}
-	select		{-webkit-appearance:none;-moz-appearance:none;appearance:none;}
 	label {position:relative}
 	label:after {content:'<>';font:10px 'Consolas', monospace;color:#fff;-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg);right:3px; top:3px;padding:0;position:absolute;pointer-events:none;}
 	label:before {content:'';right:0; top:0;width:17px; height:17px;background:#1e252e;position:absolute;pointer-events:none;display:block;}
@@ -170,7 +169,7 @@ function hardHeader() {
 			} else alert('Request error!');
 	}
 </script>
-<head><body><div style='position:absolute;width:100%;top:0;left:0;'>
+<head><body><div style='position:absolute;background-color:#1e252e;width:100%;top:0;left:0;'>
 <form method=post name=mf style='display:none;'>
 <input type=hidden name=a>
 <input type=hidden name=c>
