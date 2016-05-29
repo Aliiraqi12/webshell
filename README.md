@@ -22,18 +22,3 @@ This PHP Shell is a useful tool for system or web administrator to do remote man
 ##Пароль: admin
 ## Скриншот
 ![](http://cs621518.vk.me/v621518400/d6ad/e3CgJxw9ThA.jpg)
-
-#Donate ~(￣▽￣)~
-Dogecoin DOGE address: DH5WCDTtBs24pXgRBjkR4z3SwDKnCtXsfB
-
-Bitcoin-адрес: 1CJehqxoaz8bnGmqNGf1RZ7dmtKWGNt5KM
-
-ETHEREUM: 0xf12fed68dd51687be1a3410d9ec17c3d2e9227c9
-
-Яндекс.Деньги: 410012298324261
-
-WebMoney WMR: R180357107644
-
-WebMoney WMZ: Z183801665529
-
-WebMoney WME: E150418742890
